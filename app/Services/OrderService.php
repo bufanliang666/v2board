@@ -10,6 +10,7 @@ use App\Models\Payment;
 use App\Utils\CacheKey;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use App\Services\OrderNotifyService;
 
 class OrderService
 {
@@ -236,6 +237,7 @@ class OrderService
         $order->callback_no = $callbackNo;
         if (!$order->save()) return false;
         OrderHandleJob::dispatch($order->trade_no);
+        app(OrderNotifyService::class)->notify($order);
         return true;
     }
 
