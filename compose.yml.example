@@ -1,0 +1,12 @@
+services:
+  v2board:
+    image: ghcr.io/bufanliang666/v2board:latest
+    volumes:
+      - ./.docker/.data/redis/:/data/ 
+      # - ./:/www/
+      - ./.env:/www/.env
+      - ./v2board.php:/config/v2board.php
+    network_mode: host
+    restart: always
+     ports:
+       - 7002:7002
