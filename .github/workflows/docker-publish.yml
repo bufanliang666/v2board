@@ -3,7 +3,7 @@ name: Docker Build and Publish
 on:
   workflow_dispatch:
   push:
-    branches: ["dev"]
+    branches: ["master"]
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
