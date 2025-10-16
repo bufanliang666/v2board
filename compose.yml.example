@@ -1,6 +1,6 @@
 services:
   v2board:
-    image: ghcr.io/bufanliang666/v2board:latest
+    image: ghcr.io/ccb6d/v2board:latest
     volumes:
       - ./.docker/.data/redis/:/data/ 
       # - ./:/www/
