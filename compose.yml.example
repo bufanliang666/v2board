@@ -5,7 +5,7 @@ services:
       - ./.docker/.data/redis/:/data/
       # - ./:/www/
       - ./.env:/www/.env
-      - ./v2board.php:/config/v2board.php
+      - ./v2board.php:/www/config/v2board.php
     network_mode: host
     restart: always
     ports:
