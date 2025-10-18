@@ -1,0 +1,37 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # 每天上午10点执行（UTC时间2点）
+  workflow_dispatch: # 允许手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔧 检出代码
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 🧩 设置 Git 用户信息
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: 📥 添加上游仓库并拉取更新
+        run: |
+          git remote add upstream https://github.com/wyx2685/v2board.git
+          git fetch upstream master
+          git checkout master
+          git merge upstream/master --no-edit || true
+
+      - name: 🚀 推送到 Fork 仓库
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git master
